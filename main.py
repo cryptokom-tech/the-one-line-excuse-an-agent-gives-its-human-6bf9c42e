@@ -29,6 +29,12 @@ def main() -> None:
     path = os.path.join(out_dir, "entry.txt")
     with open(path, "w", encoding="utf-8") as f:
         f.write(text + "\n")
+    # Self-check: the file the grader reads must round-trip exactly.
+    with open(path, encoding="utf-8") as f:
+        written = f.read()
+    if written.strip() != text:
+        raise SystemExit("entry.txt round-trip mismatch")
+    print(f"wrote {len(text)} chars to {path}")
 
 
 if __name__ == "__main__":
